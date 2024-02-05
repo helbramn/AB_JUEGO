@@ -6,10 +6,11 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class SimonDice {
-    private final Jugador jugador;
+    public final Jugador jugador;
     private final List<String> secuencia = new ArrayList<>();
     private final String[] colores = {"Rojo", "Azul", "Verde", "Amarillo"};
     private final Random random = new Random();
+   ;
     private int limiteRepeticiones = 8; // Puedes ajustar este límite
     private int repeticionesRealizadas = 0;
     private final int tiempoVisualizacion = 5000; // 5000 milisegundos (5 segundos)
@@ -26,13 +27,13 @@ public class SimonDice {
             secuencia.add(colores[random.nextInt(colores.length)]);
 
             // Muestra la secuencia al jugador durante 5 segundos
-            mostrarSecuencia(tiempoVisualizacion);
+            mostrarSecuencia(tiempoVisualizacion, secuencia);
 
             // Permite al jugador intentar replicar la secuencia
             if (!jugador.replicar(secuencia.toArray(new String[0]))) {
                 // Si el jugador falla, muestra el mensaje y termina el juego
                 System.out.println("Lo siento, has perdido. La secuencia era: ");
-                mostrarSecuencia(0); // Mostrar la secuencia completa si hay un error
+                mostrarSecuencia(0, secuencia); // Mostrar la secuencia completa si hay un error
                 return false;
             }
 
@@ -61,16 +62,16 @@ public class SimonDice {
         limiteRepeticiones = nuevoLimite;
     }
 
-    private void mostrarSecuencia(int tiempoVisualizacion) {
-        for (String color : secuencia) {
+    public void mostrarSecuencia(int tiempoVisualizacion, List<String> secuencia) {
+        for (String color : this.secuencia) {
             System.out.print(color + " ");
-            pausa(tiempoVisualizacion / secuencia.size());
+            pausa(tiempoVisualizacion / this.secuencia.size());
         }
-        pausa(tiempoVisualizacion % secuencia.size()); // Tiempo adicional al final
+        pausa(tiempoVisualizacion % this.secuencia.size()); // Tiempo adicional al final
         limpiarPantalla();
     }
 
-    private void pausa(int milisegundos) {
+    public void pausa(int milisegundos) {
         try {
             TimeUnit.MILLISECONDS.sleep(milisegundos);
         } catch (InterruptedException e) {
@@ -81,5 +82,8 @@ public class SimonDice {
     private void limpiarPantalla() {
         // Simula la limpieza de la pantalla (puedes ajustar esto según tu entorno de desarrollo)
         for (int i = 0; i < 50; ++i) System.out.println();
+    }
+
+    public void mostrarSecuencia(int i) {
     }
 }
