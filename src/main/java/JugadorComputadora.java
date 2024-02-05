@@ -9,6 +9,6 @@ public class JugadorComputadora implements Jugador {
             }
             System.out.println(color);
         }
-        return true; // En este caso, la computadora siempre replica correctamente
+        return true; // Siempre replica correctamente
     }
 }

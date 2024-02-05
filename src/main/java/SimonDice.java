@@ -6,30 +6,32 @@ import java.util.concurrent.TimeUnit;
 public class SimonDice {
     private final Jugador jugador;
     private final List<String> secuencia = new ArrayList<>();
-    private final String[] colores = {"Rojo", "Azul", "Verde", "Amarillo"};
+    private final String[] colores = {"Rojo", "Azul", "Verde", "Amarillo"}; // Todos los colores que pueden aparecer
     private final Random random = new Random();
-    private final int limiteRepeticiones = 8; // Puedes ajustar este límite
+    private final int limiteRepeticiones = 8; // Limite de colores que aparecera en una partida. Editable
     private int repeticionesRealizadas = 0;
-    private final int tiempoVisualizacion = 5000; // 5000 milisegundos (5 segundos)
+    private final int tiempoVisualizacion = 3000; // 3000 milisegundos (3 segundos)
 
     public SimonDice(Jugador jugador) {
         this.jugador = jugador;
     }
 
     public void jugar() {
-        System.out.println("Bienvenido al juego de 'Simón dice'!");
+        System.out.println(" Bienvenido al juego de 'Simón dice'!");
 
         while (repeticionesRealizadas < limiteRepeticiones) {
             // Agrega un nuevo color a la secuencia
             secuencia.add(colores[random.nextInt(colores.length)]);
 
-            // Muestra la secuencia al jugador durante 5 segundos
-            mostrarSecuencia(tiempoVisualizacion);
+            // Muestra la secuencia al jugador durante 3 segundos
+            if (repeticionesRealizadas > 0) {
+                mostrarSecuencia(tiempoVisualizacion);
+            }
 
             // Permite al jugador intentar replicar la secuencia
             if (!jugador.replicar(secuencia.toArray(new String[0]))) {
-                // Si el jugador falla, muestra el mensaje y termina el juego
-                System.out.println("Lo siento, has perdido. La secuencia era: ");
+                // Si el jugador falla, se termina el juego y sale mensaje de derrota por pantalla
+                System.out.println("Lo siento, has perdido, a ver si aprendemos a leer. La secuencia era: ");
                 mostrarSecuencia(0); // Mostrar la secuencia completa si hay un error
                 return;
             }
@@ -63,7 +65,7 @@ public class SimonDice {
     }
 
     private void limpiarPantalla() {
-        // Simula la limpieza de la pantalla (puedes ajustar esto según tu entorno de desarrollo)
+        // Simula la limpieza de la pantalla
         for (int i = 0; i < 50; ++i) System.out.println();
     }
 }
